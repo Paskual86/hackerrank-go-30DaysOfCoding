@@ -8,7 +8,7 @@
 
 Example:
 
-```go
+```Go
 package employee
 
 import (  
