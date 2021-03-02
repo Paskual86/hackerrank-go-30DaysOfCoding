@@ -4,12 +4,16 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
 )
 
 func main() {
+
+	readFile("./../Lotes de Pruebas/Day8/Test1.txt")
+
 	//Enter your code here. Read input from STDIN. Print output to STDOUT
 	reader := bufio.NewReaderSize(os.Stdin, 1024*1024)
 
@@ -21,19 +25,6 @@ func main() {
 	input := loadPhoneNumber(n, reader)
 
 	queryPhoneNumber(n, reader, input)
-	/*var input_search string
-
-	input_search = strings.TrimLeft(strings.TrimRight(readLine(reader), " "), " ")
-
-	for ok := true; ok; ok = (input_search != "") {
-		value, found := input[input_search]
-		if found {
-			fmt.Println(input_search, "=", value)
-		} else {
-			fmt.Println("Not found")
-		}
-		input_search = strings.TrimLeft(strings.TrimRight(readLine(reader), " "), " ")
-	}*/
 }
 
 func loadPhoneNumber(quantity int, reader *bufio.Reader) map[string]string {
@@ -53,20 +44,15 @@ func queryPhoneNumber(quantity int, reader *bufio.Reader, input map[string]strin
 	var i int
 
 	var input_search string
-	var result []string
 
 	for i = 1; i <= quantity; i++ {
 		input_search = strings.TrimLeft(strings.TrimRight(readLine(reader), " "), " ")
 		value, found := input[input_search]
 		if found {
-			result = append(result, input_search+"="+value)
+			fmt.Println(input_search + "=" + value)
 		} else {
-			result = append(result, "Not found")
+			fmt.Println("Not found")
 		}
-	}
-
-	for i = 0; i < len(result); i++ {
-		fmt.Println(result[i])
 	}
 }
 
@@ -83,4 +69,18 @@ func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func readFile(pathfile string) {
+	dat, err := ioutil.ReadFile(pathfile)
+	checkError(err)
+	fmt.Print(string(dat))
+
+	f, err := os.Open(pathfile)
+	checkError(err)
+
+	b1 := make([]byte, 5)
+	n1, err := f.Read(b1)
+	checkError(err)
+	fmt.Printf("%d bytes: %s\n", n1, string(b1[:n1]))
 }
